@@ -10,16 +10,12 @@ const PostDetailPage = () => {
   const [commentList, setCommentList] = useState([]);
   const [isOpenCommentList, setIsOpenCommentList] = useState(false);
 
-  // const fetchPostDetail = async () => {
-  //   const response = await axios.get("/api/post");
-  //   setPostDetail(response.data);
-  // };
-
+  // axios 관심사 분리
   const fetchPostDetail = async () => {
     const res = await postDetailApi();
     setPostDetail(res.data);
   }
-
+  // axios 관심사 분리
   const fetchComments = async () => {
     const res = await commentsApi(params, LIMIT_TAKE);
     setCommentList(res.data.Comments);
