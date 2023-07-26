@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import SomethingPageNation from "../components/pagenation/Pagenation.Common";
+import { commentsApi, postDetailApi } from "../apis/getApi";
 
 const LIMIT_TAKE = 20;
 const PostDetailPage = () => {
@@ -10,20 +10,20 @@ const PostDetailPage = () => {
   const [commentList, setCommentList] = useState([]);
   const [isOpenCommentList, setIsOpenCommentList] = useState(false);
 
+  // const fetchPostDetail = async () => {
+  //   const response = await axios.get("/api/post");
+  //   setPostDetail(response.data);
+  // };
+
   const fetchPostDetail = async () => {
-    const response = await axios.get("/api/post");
-    setPostDetail(response.data);
-  };
+    const res = await postDetailApi();
+    setPostDetail(res.data);
+  }
 
   const fetchComments = async () => {
-    const response = await axios.get("/api/comments", {
-      params: {
-        take: params.get("take") ?? LIMIT_TAKE,
-      },
-    });
-    console.log(response.data);
-    setCommentList(response.data.Comments);
-  };
+    const res = await commentsApi(params, LIMIT_TAKE);
+    setCommentList(res.data.Comments);
+  }
 
   const onClickMoreComments = async () => {
     setIsOpenCommentList(true);
