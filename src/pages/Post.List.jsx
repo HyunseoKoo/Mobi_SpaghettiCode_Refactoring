@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { DialLogState, useDiaLogStore } from "../contexts/DialogProvider";
-import PostPageNation from "../components/pagenation/Pagenation.Post";
 import { useSearchParams } from "react-router-dom";
+import SomethingPageNation from "../components/pagenation/Pagenation.Common";
 
 const LIMIT_TAKE = 10;
 const PostListPage = () => {
@@ -65,7 +65,7 @@ const PostListPage = () => {
           <td>{post.User.nickName}</td>
         </tr>
       ))}
-      <PostPageNation />
+      <SomethingPageNation data = {'posts'}/>
     </table>
   );
 };

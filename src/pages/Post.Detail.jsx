@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import CommentPageNation from "../components/pagenation/Pagenation.Comment";
 import { useSearchParams } from "react-router-dom";
+import SomethingPageNation from "../components/pagenation/Pagenation.Common";
 
 const LIMIT_TAKE = 20;
 const PostDetailPage = () => {
@@ -68,7 +68,7 @@ const PostDetailPage = () => {
                 <p>{comment.User.nickName}</p>
               </div>
             ))}
-            <CommentPageNation />
+            <SomethingPageNation data = {'comments'}/>
           </>
         )}
       </div>
