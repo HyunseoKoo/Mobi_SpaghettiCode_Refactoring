@@ -1,5 +1,6 @@
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useReducer, useRef, useState } from "react";
 import Dialog from "../components/Dialog";
+import listReducer from "../reducer/list-reducer";
 
 export const DialLogState = {
   ALERT: "ALERT",
@@ -8,9 +9,26 @@ export const DialLogState = {
 
 const DiaLogContext = createContext();
 
+// useReducer 리팩터링 시도
+const initialDiaLogAttribute = {
+  type: DialLogState.ALERT,
+  text: "",
+  isOpen: false,
+  onConfirm: () => {},
+  onCancel: () => {},
+  position: {
+    x: 50,
+    y: 10,
+  }
+};
+
 export const useDiaLogStore = () => useContext(DiaLogContext);
 const DiaLogProvider = ({ children }) => {
   const diaLogRef = useRef();
+
+  // useReducer 리팩터링 시도
+  // const [diaLogAttribute, setDiaLogAttribute] = useReducer(listReducer, initialDiaLogAttribute);
+  
   const [diaLogAttribute, setDiaLogAttribute] = useState({
     type: DialLogState.ALERT,
     text: "",
