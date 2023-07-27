@@ -13,7 +13,7 @@ const PostDetailPage = () => {
 
   const onClickMoreComments = async () => {
     setIsOpenCommentList(true);
-    fetchComments();
+    FetchHook(commentsApi, setCommentList, params, LIMIT_TAKE);
   };
   const onClickHiddenComments = () => {
     setIsOpenCommentList(false);
@@ -30,7 +30,7 @@ const PostDetailPage = () => {
 
   useEffect(() => {
     if (!isOpenCommentList) return;
-    FetchHook(commentsApi, setCommentList);
+    FetchHook(commentsApi, setCommentList, params, LIMIT_TAKE);
   }, [params]);
 
   return (
