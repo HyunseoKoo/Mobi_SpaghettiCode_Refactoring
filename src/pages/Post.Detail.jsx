@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import SomethingPageNation from "../components/pagenation/Pagenation.Common";
 import { commentsApi, postDetailApi } from "../apis/getApi";
+import { FetchHook } from "../customHook/fetchHook";
 
 const LIMIT_TAKE = 20;
 const PostDetailPage = () => {
@@ -9,15 +10,6 @@ const PostDetailPage = () => {
   const [postDetail, setPostDetail] = useState([]);
   const [commentList, setCommentList] = useState([]);
   const [isOpenCommentList, setIsOpenCommentList] = useState(false);
-
-  const fetchPostDetail = async () => {
-    const res = await postDetailApi();
-    setPostDetail(res.data);
-  }
-  const fetchComments = async () => {
-    const res = await commentsApi(params, LIMIT_TAKE);
-    setCommentList(res.data.Comments);
-  }
 
   const onClickMoreComments = async () => {
     setIsOpenCommentList(true);
@@ -33,12 +25,12 @@ const PostDetailPage = () => {
       alert("로그인이 필요합니다");
       window.location.href = "/";
     }
-    fetchPostDetail();
+    FetchHook(postDetailApi, setPostDetail);
   }, []);
 
   useEffect(() => {
     if (!isOpenCommentList) return;
-    fetchComments();
+    FetchHook(commentsApi, setCommentList);
   }, [params]);
 
   return (
