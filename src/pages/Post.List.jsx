@@ -3,19 +3,16 @@ import { useEffect, useState } from "react";
 import { DialLogState, useDiaLogStore } from "../contexts/DialogProvider";
 import { useSearchParams } from "react-router-dom";
 import SomethingPageNation from "../components/pagenation/Pagenation.Common";
+import { postListApi } from "../apis/getApi";
 
 const LIMIT_TAKE = 10;
 const PostListPage = () => {
   const [params] = useSearchParams();
   const [postList, setPostList] = useState([]);
-  const [, setDiaLogAttribute] = useDiaLogStore();
+  const [, , dispatch] = useDiaLogStore();
 
   const fetchPostList = async () => {
-    const response = await axios.get("/api/posts", {
-      params: {
-        take: params.get("take") ?? LIMIT_TAKE,
-      },
-    });
+    const response = await postListApi(params, LIMIT_TAKE);
     setPostList(response.data.Posts);
   };
 
@@ -31,28 +28,13 @@ const PostListPage = () => {
     fetchPostList();
   }, [params]);
 
-  // const onClickPost = async (postId) => {
-  //   await setDiaLogAttribute({
-  //     type: DialLogState.CONFIRM,
-  //     text: "정말로 페이지를 이동하겠습니까",
-  //     isOpen: true,
-  //     onConfirm: async () => {
-  //       await setDiaLogAttribute({
-  //         text: "정말로 이동해버린다요!",
-  //         onConfirm: async () => {
-  //           window.location.href = `/post-detail/${postId}`;
-  //         },
-  //       });
-  //     },
-  //     onCancel: () => {
-  //       setDiaLogAttribute({ isOpen: false });
-  //     },
-  //   });
-  // };
-
-  // refactor 시도중
+  // useReducer 적용 리팩터링
   const onClickPost = async (postId) => {
-    dispatchEvent({type: 'movePage', postId})
+    dispatch({type: 'moveToBlog', payload: {
+      type: DialLogState.CONFIRM,
+      state: false,
+      urlEndPoint: `/post-detail/${postId}`,
+    }})
   };
 
   return (

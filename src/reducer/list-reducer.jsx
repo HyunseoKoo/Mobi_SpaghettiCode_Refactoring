@@ -1,20 +1,32 @@
 export default function listReducer(list, action) {
     switch (action.type) {
-        case 'movePage' : {
+        case 'moveToBlog' : {
+            const modal = {
+                ...list,
+                type: action.payload.type,
+                text: "정말로 페이지를 이동하겠습니까",
+                isOpen: true 
+            };
+
+            modal.onConfirm = async () => {
+                if(action.payload.state) {modal.isOpen = false};
+                window.location.href = action.payload.urlEndPoint;
+            }
+            return modal;
+        };
+
+        case 'keepPrevDialogAttribute' : {
             return {
                 ...list,
-                text: "정말로 이동하겠습니다!",
-                isOpen: true,
-                onConfirm: async() => {
-                    window.location.href = `/post-detail/${postId}`;
-                }
+                ...action.payload,
             }
         };
-        case 'cancelMovePage' : {
+
+        case 'onCloseDialog' : {
             return {
                 ...list,
                 isOpen: false,
             }
-        }
+        };
     }
 }

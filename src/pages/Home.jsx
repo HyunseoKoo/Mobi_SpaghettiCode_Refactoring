@@ -7,7 +7,7 @@ import { DialLogState, useDiaLogStore } from "../contexts/DialogProvider";
 const HomePage = () => {
   const [isBackGroundBlur, setIsBackGroundBlur] = useState(true);
   const [weather, setWeather] = useState();
-  const [, setDiaLogAttribute] = useDiaLogStore();
+  const [, , dispatch] = useDiaLogStore();
 
   const fetchWeather = async () => {
     try {
@@ -49,16 +49,13 @@ const HomePage = () => {
     e.target.userName.value = "";
   };
 
+  // useReducer 적용 리팩터링
   const onPressNavigateBlog = () => {
-    setDiaLogAttribute({
+    dispatch({type: 'moveToBlog', payload:{
       type: DialLogState.ALERT,
-      text: "정말로 페이지를 이동하겠습니까",
-      isOpen: true,
-      onConfirm: async () => {
-        await setDiaLogAttribute({ isOpen: false });
-        window.location.href = "/posts";
-      },
-    });
+      state: true,
+      urlEndPoint: "/posts",
+    }})
   };
 
   return (
