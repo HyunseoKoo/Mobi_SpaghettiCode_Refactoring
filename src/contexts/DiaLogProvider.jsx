@@ -25,7 +25,7 @@ export const useDiaLogStore = () => useContext(DiaLogContext);
 const DiaLogProvider = ({ children }) => {
   const diaLogRef = useRef();
 
-  // useReducer 리팩터링
+  // useReducer 리팩터링`
   const [diaLogAttribute, dispatch] = useReducer(listReducer, initialDiaLogAttribute);
 
   useEffect(() => {

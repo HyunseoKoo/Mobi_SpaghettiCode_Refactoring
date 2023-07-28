@@ -53,6 +53,7 @@ const HomePage = () => {
   const onPressNavigateBlog = () => {
     dispatch({type: 'moveToBlog', payload:{
       type: DialLogState.ALERT,
+      text: "정말로 페이지를 이동하시겠습니까?",
       state: true,
       urlEndPoint: "/posts",
     }})

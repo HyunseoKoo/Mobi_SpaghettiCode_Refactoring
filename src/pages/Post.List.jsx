@@ -32,6 +32,7 @@ const PostListPage = () => {
   const onClickPost = async (postId) => {
     dispatch({type: 'moveToBlog', payload: {
       type: DialLogState.CONFIRM,
+      text: "정말로 페이지 이동하겠습니다!",
       state: false,
       urlEndPoint: `/post-detail/${postId}`,
     }})

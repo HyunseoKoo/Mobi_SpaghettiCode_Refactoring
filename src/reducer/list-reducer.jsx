@@ -4,12 +4,11 @@ export default function listReducer(list, action) {
             const modal = {
                 ...list,
                 type: action.payload.type,
-                text: "정말로 페이지를 이동하겠습니까",
+                text: action.payload.text,
                 isOpen: true 
             };
 
             modal.onConfirm = async () => {
-                if(action.payload.state) {modal.isOpen = false};
                 window.location.href = action.payload.urlEndPoint;
             }
             return modal;
